@@ -133,10 +133,20 @@ public class secureDevice extends CordovaPlugin {
     private static boolean isPatternSet(Context context)
     {
         ContentResolver cr = context.getContentResolver();
+        int lockPatternEnable;
         try
         {
-            int lockPatternEnable = Settings.Secure.getInt(cr, Settings.Secure.LOCK_PATTERN_ENABLED);
-            return lockPatternEnable == 1;
+           if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+              {
+                   KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                   lockPatternEnable = keyguardManager.isKeyguardSecure();
+                   return lockPatternEnable == 1;
+              }
+           else
+              {
+                  lockPatternEnable = Settings.Secure.getInt(cr, Settings.Secure.LOCK_PATTERN_ENABLED);
+                  return lockPatternEnable == 1;
+              }
         }
         catch (Settings.SettingNotFoundException e)
         {
