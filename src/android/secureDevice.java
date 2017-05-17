@@ -137,6 +137,7 @@ public class secureDevice extends CordovaPlugin {
        boolean lockPatternEnableBool;
         try
         {
+           /* Added for newest versions VCP */
            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
               {
                    KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
@@ -187,12 +188,14 @@ public class secureDevice extends CordovaPlugin {
                         new AlertDialog.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                System.exit(0);
+                                /* VCP dont want to exit the app */ 
+                                /* System.exit(0); */
                             }
                         });                
                 dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     public void onDismiss(final DialogInterface dialog) {
-                        System.exit(0);
+                          /* VCP dont want to exit the app */ 
+                          /* System.exit(0); */
                     }
                 });
                 changeTextDirection(dlg);
